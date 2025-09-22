@@ -33,5 +33,6 @@ Strings written with backticks (`) allowing:
 ${ } to insert variables
 
 Multi-line text without \n
+also need it for dynamic text too
 Example:
 `Hi this is ${user}, there is ${count} E-mail`
