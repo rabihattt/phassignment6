@@ -63,7 +63,6 @@ function renderCart() {
   const cartContainer = document.getElementById("addcart");
   cartContainer.innerHTML = "<h2 class='font-bold mb-2'>Your Cart</h2>";
 
-// 
   cart.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = "flex justify-between items-center border-b py-1";
@@ -74,7 +73,6 @@ function renderCart() {
     cartContainer.appendChild(div);
   });
 
-
   const removeBtns = cartContainer.querySelectorAll(".remove-btn");
   removeBtns.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -83,7 +81,16 @@ function renderCart() {
       renderCart();
     });
   });
+
+
+  const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+
+  const totalDiv = document.createElement("div");
+  totalDiv.className = "mt-2 font-bold text-lg";
+  totalDiv.innerHTML = `Total: ট ${total.toFixed(2)}`;
+  cartContainer.appendChild(totalDiv);
 }
+
 
 
 function categories() {
