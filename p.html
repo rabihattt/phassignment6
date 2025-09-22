@@ -10,27 +10,81 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 </head>
-<div class="bg-white rounded-xl p-4 w-[300px] h-[380px] shadow-lg flex flex-col">
- 
-  <div class="w-full h-40 mb-3">
-    <img src="${plant.image}" alt=""
-         class="w-full h-full object-cover rounded-md">
+<!-- Modal -->
+<div id="plant-modal"
+     class="fixed inset-0 bg-black bg-opacity-50 hidden 
+            justify-center items-center z-50">
+  <div class="bg-white w-11/12 max-w-md rounded-xl p-6 relative">
+    <button id="close-modal"
+            class="absolute top-3 right-3 text-gray-500 text-xl font-bold hover:text-gray-700">&times;</button>
+    <div id="modal-content">
+      <!-- Dynamic plant details will appear here -->
+    </div>
   </div>
-  <h2 class="text-xl font-semibold mb-1">${plant.name}</h2>
-  <p class="text-gray-600 text-sm flex-grow overflow-auto">
-    ${plant.description}
-  </p>
-
-  <div class="flex justify-between items-center mt-3">
-    <h3 class="text-sm font-medium">${plant.category}</h3>
-    <p class="text-sm font-bold text-green-600"><span>ট </span>${plant.price}</p>
-  </div>
-  <button
-    class="mt-3 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
-    Add to Cart
-  </button>
 </div>
+<script>
+  const displayplant = (plants) => {
+    const plantcontainer = document.getElementById('plant-container');
+    plantcontainer.innerHTML = '';
 
+    for (let plant of plants) {
+        const plantdiv = document.createElement('div');
+
+        // 🌱 Card content
+        plantdiv.innerHTML = `
+          <div class="bg-white rounded-xl p-4 w-[300px] h-[380px] shadow-lg flex flex-col 
+                      cursor-pointer hover:shadow-xl transition">
+            <div class="w-full h-40 mb-3">
+              <img src="${plant.image}" alt=""
+                   class="w-full h-full object-cover rounded-md">
+            </div>
+            <h2 class="text-xl font-semibold mb-1">${plant.name}</h2>
+            <p class="text-gray-600 text-sm flex-grow overflow-auto">
+              ${plant.description.slice(0, 80)}...
+            </p>
+            <div class="flex justify-between items-center mt-3">
+              <h3 class="text-sm font-medium bg-[#f0fdf4]">${plant.category}</h3>
+              <p class="text-sm font-bold text-green-600"><span>ট</span> ${plant.price}</p>
+            </div>
+          </div>`;
+
+        // 🌱 Show modal on click
+        plantdiv.querySelector('div').addEventListener('click', () => openModal(plant));
+
+        plantcontainer.appendChild(plantdiv);
+    }
+};
+
+// ✅ Modal function
+const openModal = (plant) => {
+    const modal = document.getElementById('plant-modal');
+    const content = document.getElementById('modal-content');
+    content.innerHTML = `
+        <img src="${plant.image}" alt="${plant.name}"
+             class="w-full h-52 object-cover rounded-lg mb-4">
+        <h2 class="text-2xl font-semibold mb-2">${plant.name}</h2>
+        <p class="text-gray-600 mb-3">${plant.description}</p>
+        <div class="flex justify-between items-center mt-3">
+          <h3 class="text-sm font-medium bg-[#f0fdf4] px-2 py-1 rounded">${plant.category}</h3>
+          <p class="text-sm font-bold text-green-600"><span>ট</span> ${plant.price}</p>
+        </div>
+    `;
+    modal.classList.remove('hidden');
+};
+
+// ✅ Close modal
+document.getElementById('close-modal').addEventListener('click', () => {
+    document.getElementById('plant-modal').classList.add('hidden');
+});
+
+// ✅ Close on outside click
+document.getElementById('plant-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'plant-modal') {
+        document.getElementById('plant-modal').classList.add('hidden');
+    }
+});
+
+</script>
 
 </body>
 </html>
