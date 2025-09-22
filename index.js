@@ -63,7 +63,7 @@ function renderCart() {
   const cartContainer = document.getElementById("addcart");
   cartContainer.innerHTML = "<h2 class='font-bold mb-2'>Your Cart</h2>";
 
-
+// 
   cart.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = "flex justify-between items-center border-b py-1";
